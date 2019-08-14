@@ -30,25 +30,56 @@
     </style>
 </head>
 <body>
+    <button id="clear">Clear</button>
+    <button id="draw">Draw</button>
+    <button id="erase">Erase</button>
     <div class="container">
     </div>
     <script>
-        const container = document.querySelector(".container");
 
-        let createDivs = function(){
+        const body = document.querySelector("body");
+        const container = document.querySelector(".container");
+        const clearButton = document.querySelector("#clear");
+        const eraseButton = document.querySelector("#erase");
+        const drawButton = document.querySelector("#draw");
+
             for (let i = 0; i < (16*16); i++) {
-            let div = document.createElement("div");
-            div.setAttribute("id", `div${i+1}`);
-            container.appendChild(div);
-            div.addEventListener('mouseover', (e)=>{
-                div.classList.add('drawn')
-            })
-            div.addEventListener('mouseout', (e)=>{
-                div.classList.remove('drawn')
-            })
+                let div = document.createElement("div");
+                div.setAttribute("class", "grid");
+                container.appendChild(div);
+            }
+
+        let divs = document.querySelectorAll(".grid");
+        draw()
+
+        drawButton.addEventListener('click', ()=> {
+            draw()
+            console.log("DRAW pressed");
+        })
+
+        clearButton.addEventListener('click', ()=> {
+            location.reload();
+            console.log("CLEAR pressed");
+        })
+
+        eraseButton.addEventListener('click', ()=> {
+            for (let i = 0; i < divs.length; i++) {
+                divs[i].addEventListener('mouseover', (e)=>{
+                divs[i].classList.remove('drawn')
+                })
+            }
+            
+            console.log("ERASE pressed");
+        })
+
+        function draw() {
+            for (let i = 0; i < divs.length; i++) {
+                divs[i].addEventListener('mouseover', (e)=>{
+                divs[i].classList.add('drawn')
+                })
+            }
         }
-    }
-    createDivs();
+
     </script>
 </body>
 </html>
