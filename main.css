@@ -7,6 +7,18 @@ h1{
     font-size: 3em;
 }
 
+.usage {
+    width: 50%;
+    margin: auto;
+    line-height: 1.6em;
+    font-family: serif;
+}
+
+.usage span{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
 .outer-container{
     border: 3em solid red;
     border-radius: 1em;
