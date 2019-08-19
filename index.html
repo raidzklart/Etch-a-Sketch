@@ -5,35 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Etch-a-Sketch</title>
-    <style>
-        .container {
-            margin: auto;
-            padding: 0;
-            display: grid;
-            width: 480px;
-            height: 480px;
-        }
-        .grid{
-            min-height: 1px;
-            min-width: 1px;
-            margin:0;
-            padding:0;
-            border: 1px solid rgb(135, 167, 196);
-            background: rgba(187, 196, 204, 0.342);
-        }
-        .drawn {
-            background-color: black !important;
-        }
-    </style>
+    <link rel="stylesheet" href="main.css">
 </head>
 <body>
-    <button id="clear">Clear</button>
-    <button id="draw">Draw</button>
-    <button id="random-colors">Draw in rainbow colours</button>
-    <button id="erase">Erase</button>
-    <button id="set-grid-columns">Set grid colums</button>
-    <button id="toggle-grid-lines">Toggle grid lines</button>
-    <div class="container">
+    <h1>Etch-A-Sketch</h1>
+    <div class="buttons">
+        <button class="btn" id="clear">Clear</button>
+        <button class="btn" id="draw">Black</button>
+        <button class="btn" id="erase">Erase</button>
+        <button class="btn" id="random-colors">Rainbow</button>
+        <button class="btn" id="set-grid-columns">Resize Grid</button>
+        <button class="btn" id="toggle-grid-lines">Toggle Grid</button>
+    </div>
+    <div class="outer-container">
+        <div class="container">
+        </div>
     </div>
     <script>
 
@@ -70,7 +56,8 @@
             grid = document.querySelectorAll(".grid");
             for (let i = 0; i < grid.length; i++) {
                 grid[i].addEventListener('mouseover', (e)=>{
-                grid[i].classList.remove('drawn')
+                grid[i].setAttribute("style", "background-color: rgba(187, 196, 204, 0.342);");
+                grid[i].classList.remove("drawn")
                 })
             }
             
@@ -114,9 +101,12 @@
             for (let i = 0; i < grid.length; i++) {
                 grid[i].addEventListener('mouseover', (e)=>{
                     if(!rainbow){
-                        grid[i].classList.add('drawn')
+                        grid[i].classList.add('drawn');
+                        grid[i].setAttribute("style", "background-color: #000;");
                     }else if(rainbow){
-                        grid[i].setAttribute("style", `background: #${Math.floor(Math.random()*16777215).toString(16)};`);
+                        grid[i].classList.add('drawn');
+                        grid[i].classList.add('rainbow');
+                        grid[i].setAttribute("style", `background-color: #${Math.floor(Math.random()*16777215).toString(16)};`);
                     }
                 })
             }
@@ -125,9 +115,15 @@
         function toggleGridLines(){
             for (let i = 0; i < grid.length; i++) {
                 if(!gridLinesOn){
-                    grid[i].setAttribute("style", "border: 1px solid rgb(135, 167, 196)")
+                    grid[i].setAttribute("style", "border: 1px solid rgb(135, 167, 196);")
                 }else {
-                    grid[i].setAttribute("style", "border:none")
+                    grid[i].setAttribute("style", "border:1px solid rgba(135, 167, 196, 0);")
+                }
+                if(grid[i].classList.value.includes("drawn")){
+                    grid[i].setAttribute("style", "background-color: #000;");
+                }
+                if(grid[i].classList.value.includes("rainbow")){
+                    grid[i].setAttribute("style", `background-color: #${Math.floor(Math.random()*16777215).toString(16)};`);
                 }
             }
             gridLinesOn = !gridLinesOn;
